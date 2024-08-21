@@ -8,7 +8,11 @@ const Desk = () => {
     const [openWindows, setOpenWindows] = createSignal<string[]>(["Browser", "Terminal"]);
     const [blossomWindow, setBlossomWindow] = createSignal<string | null>(null);
     const [clockTime, setClockTime] = createSignal(new Date());
-
+    const [zIndexMap, setZIndexMap] = createSignal<{ [key: string]: number }>({});
+    const [windowPositions, setWindowPositions] = createSignal<{ [key: string]: { top: string; left: string } }>({
+        Browser: { top: "10%", left: "10%" },
+        Terminal: { top: "20%", left: "45%" },
+    });
     // Function to update time every minute
     const updateTime = () => {
         const update = () => setClockTime(new Date());
@@ -70,6 +74,31 @@ const Desk = () => {
 
     // Effect to manage time updates
     createEffect(updateTime);
+    const handleDragStart = (windowId: string, e: MouseEvent) => {
+        const target = document.getElementById(windowId);
+        if (!target || target.classList.contains("fullscreen")) return;
+
+        const dragMove = (event: MouseEvent) => {
+            if (!target) return;
+            const { movementX, movementY } = event;
+            const rect = target.getBoundingClientRect();
+            setWindowPositions((prev) => ({
+                ...prev,
+                [windowId]: {
+                    top: `${rect.top + movementY}px`,
+                    left: `${rect.left + movementX}px`,
+                },
+            }));
+        };
+
+        const dragEnd = () => {
+            document.removeEventListener("mousemove", dragMove);
+            document.removeEventListener("mouseup", dragEnd);
+        };
+
+        document.addEventListener("mousemove", dragMove);
+        document.addEventListener("mouseup", dragEnd);
+    };
 
     // Mouse event listeners for dragging
     onMount(() => {
@@ -139,14 +168,16 @@ const Desk = () => {
 
             {openWindows().includes("Terminal") && (
                 <Window
-                    id={"id"}
+                    id="Terminal"
                     title="Terminal"
                     onClose={() => toggleWindow("Terminal")}
+                    onActivate={() => bringWindowToTop("Terminal")}
+                    zIndex={zIndexMap().Terminal || 0}
                     content={
-                        <>
+                        <div class="terminalContent">
                             <div id="terminalPrefix">user@blossomOS:~$</div>
                             <input type="text" class="terminalInput" />
-                        </>
+                        </div>
                     }
                 />
             )}
