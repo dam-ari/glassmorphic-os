@@ -45,25 +45,7 @@ const Desk = () => {
                     onActivate={() => bringWindowToTop("Browser")}
                     zIndex={zIndexMap().Browser || 0}
                     content={
-
-                        <div class="browserContent  text-gray-600">
-                            <h1>BlossomOS - The glassmorphic operating system.</h1>
-                            <div class="callToAction">
-                                <button>Download</button>
-                                <button>Learn More</button>
-                            </div>
-                            <div class="cards  text-gray-600">
-                                <div>
-                                    <h3>Glass</h3>
-                                    <p>BlossomOS embraces and immortalizes new trends in UI design.</p>
-                                </div>
-                                <div>
-                                    <h3>Blossom</h3>
-                                    <p>BlossomOS keeps a calm, soothing cherry blossom aesthetic.</p>
-                                </div>
-                            </div>
-                        </div>
-
+                        <iframe src="https://www.wikipedia.com" class="browserFrame h " style={{ border: 'none' }}></iframe>
                     }
                 />
             )}
@@ -78,7 +60,7 @@ const Desk = () => {
                     content={
                         <div class="terminalContent">
                             <div id="terminalPrefix">user@blossomOS:~$</div>
-                            <input type="text" class="terminalInput" />
+                            <input id="terminalInput" type="text" class="terminalInput" placeholder="Enter command..." />
                         </div>
                     }
                 />

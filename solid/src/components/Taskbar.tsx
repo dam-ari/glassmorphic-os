@@ -25,18 +25,18 @@ const Taskbar: Component<TaskbarProps> = ({ toggleWindow }) => {
 
     return (
         <div id="taskbar" class="">
-            <div class="taskbaritems rounded w-7/12 text-accent-content">
-                <button id="startMenu">
+            <div class="taskbaritems rounded w-7/12 text-accent-content/80">
+                <button id="startMenu" aria-label="Start Menu">
                     <i class="fa-solid fa-vihara"></i>
                 </button>
-                <button id="BrowserToolbar" onClick={() => toggleWindow("Browser")}>
+                <button id="BrowserToolbar" onClick={() => toggleWindow("Browser")} aria-label="Open Browser">
                     <i class="fa-solid fa-globe"></i>
                 </button>
-                <button id="TerminalToolbar" onClick={() => toggleWindow("Terminal")}>
+                <button id="TerminalToolbar" onClick={() => toggleWindow("Terminal")} aria-label="Open Terminal">
                     <i class="fa-solid fa-terminal"></i>
                 </button>
-                <a class="exited" href="https://github.com/dam-ari" target="_blank">
-                    <i class="fa-brands fa-github"></i>
+                <a class="exited" href="https://github.com/dam-ari" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-github" aria-label="Visit GitHub"></i>
                 </a>
             </div>
 
