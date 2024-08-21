@@ -6,42 +6,7 @@ import Window from "./Window";
 const Desk = () => {
     // Signal to track which windows are open
     const [openWindows, setOpenWindows] = createSignal<string[]>(["Browser", "Terminal"]);
-    const [blossomWindow, setBlossomWindow] = createSignal<string | null>(null);
-    const [clockTime, setClockTime] = createSignal(new Date());
     const [zIndexMap, setZIndexMap] = createSignal<{ [key: string]: number }>({});
-    const [windowPositions, setWindowPositions] = createSignal<{ [key: string]: { top: string; left: string } }>({
-        Browser: { top: "10%", left: "10%" },
-        Terminal: { top: "20%", left: "45%" },
-    });
-    // Function to update time every minute
-    const updateTime = () => {
-        const update = () => setClockTime(new Date());
-        update();
-        setInterval(update, 60000);
-    };
-
-    // Draggable and resizable window behavior
-    let activeWindow: HTMLElement | null = null;
-
-    const dragStart = (e: MouseEvent, windowId: string) => {
-        const target = document.getElementById(windowId);
-        if (!target || target.classList.contains("fullscreen")) return;
-        activeWindow = target;
-    };
-
-    const dragMove = (e: MouseEvent) => {
-        if (!activeWindow) return;
-        if (activeWindow.classList.contains("fullscreen")) return;
-
-        const { movementX, movementY } = e;
-        const rect = activeWindow.getBoundingClientRect();
-        activeWindow.style.top = `${rect.top + movementY}px`;
-        activeWindow.style.left = `${rect.left + movementX}px`;
-    };
-
-    const dragEnd = () => {
-        activeWindow = null;
-    };
 
     const toggleWindow = (windowId: string) => {
         if (openWindows().includes(windowId)) {
@@ -49,13 +14,6 @@ const Desk = () => {
         } else {
             setOpenWindows([...openWindows(), windowId]);
         }
-    };
-
-    const formatTime = (date: Date) => {
-        const hours = date.getHours();
-        const minutes = date.getMinutes().toString().padStart(2, "0");
-        const meridiem = hours >= 12 ? "PM" : "AM";
-        return `${hours % 12 || 12}:${minutes} ${meridiem}`;
     };
 
     // Function to bring a window to the top
@@ -72,61 +30,9 @@ const Desk = () => {
         }
     };
 
-    // Effect to manage time updates
-    createEffect(updateTime);
-    const handleDragStart = (windowId: string, e: MouseEvent) => {
-        const target = document.getElementById(windowId);
-        if (!target || target.classList.contains("fullscreen")) return;
-
-        const dragMove = (event: MouseEvent) => {
-            if (!target) return;
-            const { movementX, movementY } = event;
-            const rect = target.getBoundingClientRect();
-            setWindowPositions((prev) => ({
-                ...prev,
-                [windowId]: {
-                    top: `${rect.top + movementY}px`,
-                    left: `${rect.left + movementX}px`,
-                },
-            }));
-        };
-
-        const dragEnd = () => {
-            document.removeEventListener("mousemove", dragMove);
-            document.removeEventListener("mouseup", dragEnd);
-        };
-
-        document.addEventListener("mousemove", dragMove);
-        document.addEventListener("mouseup", dragEnd);
-    };
-
-    // Mouse event listeners for dragging
-    onMount(() => {
-        document.addEventListener("mousemove", dragMove);
-        document.addEventListener("mouseup", dragEnd);
-    });
-
-
     return (
         <div id="windowsOverlay">
-            {/* Taskbar */}
-            <div id="taskbar" class="">
-                <div class="taskbaritems rounded w-7/12 text-gray-600">
-                    <button id="startMenu">
-                        <i class="fa-solid fa-vihara"></i>
-                    </button>
-                    <button id="BrowserToolbar" onClick={() => toggleWindow("Browser")}>
-                        <i class="fa-solid fa-globe"></i>
-                    </button>
-                    <button id="TerminalToolbar" onClick={() => toggleWindow("Terminal")}>
-                        <i class="fa-solid fa-terminal"></i>
-                    </button>
-                    <a class="exited" href="https://github.com/dam-ari" target="_blank">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-                </div>
-                <div id="time">{formatTime(clockTime())}</div>
-            </div>
+
 
             {/* Windows */}
             {openWindows().includes("Browser") && (
@@ -177,10 +83,13 @@ const Desk = () => {
                     }
                 />
             )}
-            <div class="fixed bottom-10 left-0 w-full flex justify-center p-4">
-                <Taskbar />
-            </div>
 
+
+            {/* Taskbar */}
+            <div class="fixed bottom-10 left-0 w-full flex justify-center p-4">
+
+                <Taskbar toggleWindow={toggleWindow} />
+            </div>
         </div>
     );
 };

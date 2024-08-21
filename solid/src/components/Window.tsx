@@ -124,13 +124,13 @@ export default function Window({
                     <div class="text-accent-content">{title}</div>
                     <div class="windowActionButtons">
                         <button onClick={toggleMinimize} title="Minimize">
-                            <i class="minimize fa-solid fa-trowel text-warning/70 "></i>
+                            <i class="minimize fa-solid fa-trowel "></i>
                         </button>
                         <button onClick={toggleFullscreen} title="Fullscreen ">
-                            <i class="windowed fa-solid fa-seedling text-info/70 "></i>
+                            <i class="windowed fa-solid fa-seedling  "></i>
                         </button>
                         <button onClick={() => onClose(id)} title="Close">
-                            <i class="close fa-solid fa-trash-can text-secondary/70 "></i>
+                            <i class="close fa-solid fa-trash-can  "></i>
                         </button>
                     </div>
                 </div>
