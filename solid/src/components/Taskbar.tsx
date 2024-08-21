@@ -41,7 +41,7 @@ const Taskbar: Component<TaskbarProps> = ({ toggleWindow }) => {
             </div>
 
             <div class="flex">
-                <div id="time" class="float">
+                <div id="time" class="float float-right">
                     {formatTime(clockTime())}
                 </div>
                 <span class="size-1 px-10">
