@@ -43,7 +43,7 @@ const Taskbar: Component = () => {
                 </a>
             </div>
 
-            <div class="flex">
+            <div class="flex ">
 
                 {/* <div class="flex justify-center align-items-middle"> */}
                 <div id="time" class="float">{formatTime(clockTime())}

@@ -130,21 +130,16 @@ const Desk = () => {
 
             {/* Windows */}
             {openWindows().includes("Browser") && (
-                <div
+                <Window
                     id="Browser"
-                    class="windowPositioner"
-                    style={{ top: "10%", left: "10%" }}
-                    onMouseDown={() => bringWindowToTop("Browser")}
-                >
-                    <div class="window  text-gray-600">
-                        <div class="nav" onMouseDown={(e) => dragStart(e, "Browser")}>
-                            <div>Browser</div>
-                            <div class="windowActionButtons">
-                                <button onClick={() => toggleWindow("Browser")}>
-                                    <i class="close fa-solid fa-trash-can"></i>
-                                </button>
-                            </div>
-                        </div>
+                    title="Browser Rock"
+                    defaultTop="10%"
+                    defaultLeft="10%"
+                    onClose={() => toggleWindow("Browser")}
+                    onActivate={() => bringWindowToTop("Browser")}
+                    zIndex={zIndexMap().Browser || 0}
+                    content={
+
                         <div class="browserContent  text-gray-600">
                             <h1>BlossomOS - The glassmorphic operating system.</h1>
                             <div class="callToAction">
@@ -162,8 +157,9 @@ const Desk = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+
+                    }
+                />
             )}
 
             {openWindows().includes("Terminal") && (

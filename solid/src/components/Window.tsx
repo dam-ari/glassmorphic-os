@@ -1,4 +1,5 @@
-import { createSignal, onCleanup, onMount } from "solid-js";
+import { createSignal, JSX, onCleanup, onMount } from "solid-js";
+import "./Window.scss";
 
 type WindowProps = {
     id: string;
@@ -112,34 +113,32 @@ export default function Window({
     });
 
     return (
-        !isMinimized() && (
-            <div
-                id={id}
-                class={`windowPositioner ${isFullscreen() ? "fullscreen" : ""}`}
-                style={{ top: position().top, left: position().left, width: size().width, height: size().height, zIndex }}
-                onMouseDown={() => onActivate(id)}
-            >
-                <div class="window">
-                    <div class="nav" onMouseDown={dragStart}>
-                        <div>{title}</div>
-                        <div class="windowActionButtons">
-                            <button onClick={toggleMinimize} title="Minimize">
-                                <i class="minimize fa-solid fa-trowel"></i>
-                            </button>
-                            <button onClick={toggleFullscreen} title="Fullscreen">
-                                <i class="windowed fa-solid fa-seedling"></i>
-                            </button>
-                            <button onClick={() => onClose(id)} title="Close">
-                                <i class="close fa-solid fa-trash-can"></i>
-                            </button>
-                        </div>
+        <div
+            id={id}
+            class={`windowPositioner ${isFullscreen() ? "fullscreen" : ""}`}
+            style={{ top: position().top, left: position().left, width: size().width, height: size().height, zIndex }}
+            onMouseDown={() => onActivate(id)}
+        >
+            <div class="window">
+                <div class="nav" onMouseDown={dragStart}>
+                    <div class="text-accent-content">{title}</div>
+                    <div class="windowActionButtons">
+                        <button onClick={toggleMinimize} title="Minimize">
+                            <i class="minimize fa-solid fa-trowel text-warning/70 "></i>
+                        </button>
+                        <button onClick={toggleFullscreen} title="Fullscreen ">
+                            <i class="windowed fa-solid fa-seedling text-info/70 "></i>
+                        </button>
+                        <button onClick={() => onClose(id)} title="Close">
+                            <i class="close fa-solid fa-trash-can text-secondary/70 "></i>
+                        </button>
                     </div>
-                    <div class="resizer" onMouseDown={(e) => handleResize(e, "right-bottom")}>
-                        {/* Corner Resize Element */}
-                    </div>
-                    <div class="terminalContent">{content}</div>
                 </div>
+                <div class="resizer" onMouseDown={(e) => handleResize(e, "right-bottom")}>
+                    {/* Corner Resize Element */}
+                </div>
+                <div class="terminalContent text-primary-content">{content}</div>
             </div>
-        )
+        </div>
     );
 }
