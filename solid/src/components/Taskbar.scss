@@ -1,0 +1,79 @@
+#taskbar {
+    font-size: 30px;
+    color: white;
+    width: 90%;
+    background-color: var(--taskbarColor);
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .5em;
+    box-sizing: border-box;
+    position: fixed;
+    // top: 20px; /* Adjust this value as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  
+  #taskbar>div>#time {
+    border-radius: 3px;
+    padding-left: 5px;
+    border-left: 2px solid white;
+  }
+  
+  
+  .taskbaritems {
+    display: flex;
+    justify-content: flex-start;
+    
+    &>* {
+      --marginBetweenEach: .5em;
+      --paddingXEachButton: .2em;
+      --paddingYEachButton: .3em;
+      --activeUnderlineSize: 3px;
+      
+      box-sizing: border-box;
+      border-style: none;
+      border-radius: 0;
+      background-color: transparent;
+      color: inherit;
+      font-size: inherit;
+      display: block;
+      cursor: pointer;
+      
+      margin: 0 var(--marginBetweenEach);
+      padding: var(--paddingYEachButton) var(--paddingXEachButton);
+      margin-top: calc(var(--paddingYEachButton) * 4/5);
+      padding-top: calc(var(--paddingYEachButton) * 1/5);
+      margin-bottom: calc(var(--paddingYEachButton) * 4/5);
+      padding-bottom: calc(var(--paddingYEachButton) * 1/5 + var(--activeUnderlineSize));
+      border-radius: 4px;
+      
+      &>* { transition: transform .1s ease-in-out; }
+      &:hover >* {
+        transform: translateY(-4px);
+      }
+      
+      &:not(.exited) {
+        border-bottom: var(--activeUnderlineSize) solid var(--openWindowColor);
+        padding-bottom: calc(var(--paddingYEachButton) * 1/5);
+      }
+      
+      &#startMenu {
+        padding-right: calc(var(--paddingXEachButton) + var(--marginBetweenEach));
+        border-right: 2px solid white;
+        border-bottom: none;
+        padding-bottom: calc(var(--paddingYEachButton) * 1/3 + var(--activeUnderlineSize));
+  
+      }
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+        padding-right: calc(var(--paddingXEachButton) + var(--marginBetweenEach));
+        border-right: 2px solid white;
+      }
+    }
+  }
