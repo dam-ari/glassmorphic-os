@@ -137,7 +137,7 @@ export default function Window({
                 <div class="resizer" onMouseDown={(e) => handleResize(e, "right-bottom")}>
                     {/* Corner Resize Element */}
                 </div>
-                <div class="terminalContent text-primary-content">{content}</div>
+                <div class="Content text-primary-content h-full">{content}</div>
             </div>
         </div>
     );

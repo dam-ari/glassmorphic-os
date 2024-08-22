@@ -254,13 +254,13 @@ body, .window:before, .window:after {
 
 // Terminal
 
-#Terminal .terminalContent * {
+#Terminal .Content * {
   font-family: "Cousine", monospace;
   font-size: calc(.5em + .5vw);
   line-height: 1.6em;
 }
 
-#Terminal .terminalContent {
+#Terminal .Content {
   overflow: auto;
   height: calc(100% - 3em); // cheap trick but I'm lazy
   &>div {
@@ -317,10 +317,10 @@ body, .window:before, .window:after {
 
 #Browser .browserNavOutline {
   // this class nests the entire navbar and creates the search bar outline
-  --border: 2px;
+  --border: 1px;
   --borderRadius: 3px;
-  margin-top: .2em;
-  margin-bottom: .2em;
+  margin-top: .1em;
+  margin-bottom: .1em;
   box-sizing: content-box;
   padding: var(--border);
   @include desktopBackground;
@@ -346,7 +346,7 @@ body, .window:before, .window:after {
     position: relative;
     display: flex;
     border-radius: var(--borderRadius);
-    padding: .1em .2em;
+    padding: .1em .1em;
     
     &>* { 
       flex: 5; 
@@ -354,7 +354,7 @@ body, .window:before, .window:after {
       flex-wrap: wrap;
       align-items: center;
       border-right: var(--divisionBorder);
-      margin: 0 .5ch;
+      margin: 0 .2ch;
     }
     &>:first-child { 
       flex: 1; 
@@ -438,4 +438,13 @@ body, .window:before, .window:after {
       }
     }
     
+}
+
+.bg-glass {
+  background: rgba(255, 255, 255, 0.2); /* Example glass effect */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.bg-glass:hover {
+  background: rgba(255, 255, 255, 0.3);
 }

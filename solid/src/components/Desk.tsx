@@ -2,6 +2,7 @@ import { createSignal, createEffect, onMount } from "solid-js";
 import "../style.scss"; // Import your styles here
 import Taskbar from "./Taskbar";
 import Window from "./Window";
+import Browser from "./Browser";
 
 const Desk = () => {
     // Signal to track which windows are open
@@ -36,7 +37,7 @@ const Desk = () => {
 
             {/* Windows */}
             {openWindows().includes("Browser") && (
-                <Window
+                <Browser
                     id="Browser"
                     title="Browser Rock"
                     defaultTop="10%"
@@ -44,10 +45,24 @@ const Desk = () => {
                     onClose={() => toggleWindow("Browser")}
                     onActivate={() => bringWindowToTop("Browser")}
                     zIndex={zIndexMap().Browser || 0}
-                    content={
-                        <iframe src="https://www.wikipedia.com" class="browserFrame h " style={{ border: 'none' }}></iframe>
-                    }
+
+
                 />
+                // <Window
+                //     id="Browser"
+                //     title="Browser Rock"
+                //     defaultTop="10%"
+                //     defaultLeft="10%"
+                //     onClose={() => toggleWindow("Browser")}
+                //     onActivate={() => bringWindowToTop("Browser")}
+                //     zIndex={zIndexMap().Browser || 0}
+                //     content={
+                //         <>
+
+                //         </>
+
+                //     }
+                // />
             )}
 
             {openWindows().includes("Terminal") && (
@@ -60,7 +75,7 @@ const Desk = () => {
                     content={
                         <div class="terminalContent">
                             <div id="terminalPrefix">user@blossomOS:~$</div>
-                            <input id="terminalInput" type="text" class="terminalInput" placeholder="Enter command..." />
+                            <input id="terminalInput" type="text" class="terminalInput urlSearchBar" placeholder="Enter command..." />
                         </div>
                     }
                 />
