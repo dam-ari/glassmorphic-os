@@ -10,6 +10,7 @@ type WindowProps = {
     defaultHeight?: string;
     zIndex: number;
     onClose: (id: string) => void;
+    onFullScreen?: () => void;
     onActivate: (id: string) => void;
     content: JSX.Element;
 };
@@ -23,6 +24,7 @@ export default function Window({
     defaultHeight = "400px",
     zIndex,
     onClose,
+    onFullScreen,
     onActivate,
     content,
 }: WindowProps) {
@@ -73,8 +75,13 @@ export default function Window({
         } else {
             setSize({ width: "100vw", height: "100vh" });
             setPosition({ top: "0", left: "0" });
+
         }
+
         setIsFullscreen(!isFullscreen());
+        if (onFullScreen) {
+            onFullScreen();
+        }
     };
 
     const handleResize = (e: MouseEvent, direction: string) => {

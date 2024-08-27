@@ -24,6 +24,7 @@ export default function BrowserWindow({
 }) {
     const [url, setUrl] = createSignal("https://www.wikipedia.com");
     const [inputValue, setInputValue] = createSignal("https://www.wikipedia.com");
+    const [fullScreen, setFullScreen] = createSignal(false);
 
     const handleInputChange = (e: Event) => {
         setInputValue((e.target as HTMLInputElement).value);
@@ -72,13 +73,15 @@ export default function BrowserWindow({
                     </div>
                 </div>
             </div>
-            <div class="flex-1 overflow-hidden relative w-full h-5/6">
+            <div class={`flex-1 overflow-hidden relative w-full ${fullScreen() ? 'h-full' : 'h-5/6'}`}>
                 <iframe
                     id="myIframe"
-                    class="absolute bg-white/95 border-none h-5/6 rounded w-full"
+                    class={`absolute bg-white/95 border-none rounded w-full ${fullScreen() ? 'h-[145vh]' : 'h-5/6'}`}
                     src={url()}
                     title="Browser"
                     allow="geolocation; fullscreen; microphone; camera"
+                    // add zoom out to the iframe of 60%
+                    style="zoom: 50%;"
 
                 />
             </div>
@@ -95,6 +98,7 @@ export default function BrowserWindow({
             defaultHeight={defaultHeight}
             zIndex={zIndex}
             onClose={onClose}
+            onFullScreen={() => setFullScreen(!fullScreen())}
             onActivate={onActivate}
             content={content}
         />
