@@ -75,7 +75,6 @@ export default function Window({
         } else {
             setSize({ width: "100vw", height: "100vh" });
             setPosition({ top: "0", left: "0" });
-
         }
 
         setIsFullscreen(!isFullscreen());
@@ -85,6 +84,8 @@ export default function Window({
     };
 
     const handleResize = (e: MouseEvent, direction: string) => {
+        if (typeof window === "undefined") return; // Ensure this runs on the client side only
+
         const startPos = { x: e.clientX, y: e.clientY };
         const startSize = { width: parseFloat(size().width), height: parseFloat(size().height) };
 
@@ -106,10 +107,8 @@ export default function Window({
             }
         };
 
-        if (typeof window !== "undefined") {
-            document.addEventListener("mousemove", resizeMove);
-            document.addEventListener("mouseup", resizeEnd);
-        }
+        document.addEventListener("mousemove", resizeMove);
+        document.addEventListener("mouseup", resizeEnd);
     };
 
     onCleanup(() => {

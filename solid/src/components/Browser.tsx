@@ -22,8 +22,9 @@ export default function BrowserWindow({
     onClose: (id: string) => void;
     onActivate: (id: string) => void;
 }) {
-    const [url, setUrl] = createSignal("https://www.wikipedia.com");
-    const [inputValue, setInputValue] = createSignal("https://www.wikipedia.com");
+    const defaultUrl = "https://www.wikipedia.com";
+    const [url, setUrl] = createSignal(defaultUrl);
+    const [inputValue, setInputValue] = createSignal(defaultUrl);
     const [fullScreen, setFullScreen] = createSignal(false);
 
     const handleInputChange = (e: Event) => {
@@ -34,22 +35,38 @@ export default function BrowserWindow({
         setUrl(inputValue());
     };
 
+    const goHome = () => {
+        setUrl(defaultUrl);
+        setInputValue(defaultUrl);
+        navigateToUrl();
+    }
+
     const handleKeyPress = (e: KeyboardEvent) => {
         if (e.key === "Enter") {
             navigateToUrl();
         }
     };
 
+    const icon = (classes: string, action: (_?: any) => any) => {
+        return (
+            <i class={`fa-solid ${classes} hover:bg-white/20 hover:rounded hover:scale-150 hover:p-1`}
+                onClick={action}></i>
+        )
+    }
+
     const content = (
         <div class="browser-window h-full">
             <div class="browserNavOutline">
                 <div class="browserNavBar">
-                    <div class="browserNavBarElements flex items-center gap-2">
-                        <div class="browserFunctions flex items-center gap-2">
-                            <i class="fa-solid fa-vihara"></i>
+                    <div class="browserNavBarElements flex items-stretch gap-0.5">
+                        <div class="browserFunctions flex items-center gap-0.5">
+                            {[
+                                icon("fa-home", goHome),
+                                icon("fa-arrow-left", () => alert("Back"))
+                            ]}
                             <i class="fa-solid fa-rotate-right"></i>
                         </div>
-                        <div class="urlSearchBar flex flex-1 items-center gap-2 px-2">
+                        <div class="urlSearchBar flex flex-1 items-stretch px-1">
                             <input
                                 type="text"
                                 value={inputValue()}
@@ -65,7 +82,7 @@ export default function BrowserWindow({
                                 <i class="fa-solid fa-arrow-right"></i>
                             </button>
                         </div>
-                        <div class="browserUtilities flex items-center gap-2">
+                        <div class="browserUtilities flex items-center gap-2.5 px-2">
                             <i class="fa-solid fa-download"></i>
                             <i class="fa-regular fa-bookmark"></i>
                             <i class="fa-solid fa-bars"></i>
